@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=800, height=600">
+  <title>直播信息</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 800px;
+      height: 600px;
+      background: transparent;
+      font-family: 'Microsoft YaHei', sans-serif;
+      overflow: hidden;
+    }
+
+    .widget {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      width: 480px;
+      background: rgba(24, 24, 28, 0.92);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      will-change: transform;
+      transform: translateZ(0);
+    }
+
+    .carousel {
+      position: relative;
+      height: 140px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      visibility: hidden;
+      opacity: 0;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+      transform: translateX(30%);
+    }
+
+    .slide.active {
+      visibility: visible;
+      animation: enterSlide 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    }
+
+    .slide.exit {
+      visibility: visible;
+      animation: exitSlide 0.7s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    }
+
+    @keyframes enterSlide {
+      0% {
+        opacity: 0;
+        transform: translateX(30%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes exitSlide {
+      0% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateX(-30%);
+      }
+    }
+
+    /* 斜线条纹区域 */
+    .stripe-box {
+      width: 140px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stripe-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: repeating-linear-gradient(
+        -45deg,
+        var(--stripe-color) 0px,
+        var(--stripe-color) 6px,
+        var(--stripe-dark) 6px,
+        var(--stripe-dark) 12px
+      );
+      will-change: transform;
+      animation: stripeMove 20s linear infinite;
+    }
+
+    @keyframes stripeMove {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(24px, 24px);
+      }
+    }
+
+    .stripe-box.kook {
+      --stripe-color: #1ab864;
+      --stripe-dark: #158f4e;
+    }
+
+    .stripe-box.qq {
+      --stripe-color: #12b7f5;
+      --stripe-dark: #0e92c4;
+    }
+
+    .stripe-box.bilibili {
+      --stripe-color: #fb7299;
+      --stripe-dark: #e8557d;
+    }
+
+    .icon-wrap {
+      width: 72px;
+      height: 72px;
+      border-radius: 16px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    .icon-wrap svg {
+      width: 42px;
+      height: 42px;
+    }
+
+    .text-box {
+      flex: 1;
+      padding: 0 32px;
+    }
+
+    .slide-title {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 18px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .slide-content {
+      color: #fff;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .slide.active .slide-title {
+      animation: textFadeIn 0.6s ease-out 0.1s both;
+    }
+
+    .slide.active .slide-content {
+      animation: textFadeIn 0.6s ease-out 0.2s both;
+    }
+
+    @keyframes textFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="widget">
+    <div class="carousel">
+      <!-- KOOK -->
+      <div class="slide active">
+        <div class="stripe-box kook">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="#1ab864">
+              <path d="M12 2C6.48 2 2 6.48 2 12c0 1.73.46 3.35 1.24 4.78L2 22l5.22-1.24C8.65 21.54 10.27 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm-1 14h-2v-2h2v2zm0-4h-2V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="text-box">
+          <div class="slide-title">KOOK 群组</div>
+          <div class="slide-content">IDEAo5</div>
+        </div>
+      </div>
+
+      <!-- QQ -->
+      <div class="slide">
+        <div class="stripe-box qq">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="#12b7f5">
+              <path d="M12.003 2c-2.265 0-6.29 1.364-6.29 7.325v1.195S3.55 14.96 3.55 17.474c0 .665.17 1.025.396 1.025.116 0 .247-.053.373-.138a8.68 8.68 0 0 0 1.14-1.012c.08.384.22.793.431 1.2-.074.394-.2.875-.236 1.147-.054.41.044.555.15.597.106.042.243.014.39-.058.672-.331 1.342-.954 1.863-1.467.357.12.75.212 1.163.267.203.248.65.603 1.556.603a3.07 3.07 0 0 0 1.268-.267c.247.153.673.267 1.268.267.906 0 1.353-.355 1.556-.603a5.7 5.7 0 0 0 1.163-.267c.521.513 1.19 1.136 1.863 1.467.147.072.284.1.39.058.106-.042.204-.187.15-.597-.037-.272-.162-.753-.237-1.148a3.29 3.29 0 0 0 .432-1.199 8.68 8.68 0 0 0 1.14 1.012c.125.085.256.138.372.138.226 0 .396-.36.396-1.025 0-2.514-2.166-6.954-2.166-6.954V9.325C18.29 3.364 14.268 2 12.003 2z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="text-box">
+          <div class="slide-title">QQ 粉丝群</div>
+          <div class="slide-content">152721287</div>
+        </div>
+      </div>
+
+      <!-- Bilibili -->
+      <div class="slide">
+        <div class="stripe-box bilibili">
+          <div class="icon-wrap">
+            <svg viewBox="0 0 24 24" fill="#fb7299">
+              <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z"/>
+            </svg>
+          </div>
+        </div>
+        <div class="text-box">
+          <div class="slide-title">喜欢主播的话</div>
+          <div class="slide-content">记得关注哦~</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    function nextSlide() {
+      const prev = current;
+      current = (current + 1) % slides.length;
+
+      slides[prev].classList.remove('active');
+      slides[prev].classList.add('exit');
+
+      slides[current].classList.add('active');
+
+      setTimeout(() => {
+        slides[prev].classList.remove('exit');
+      }, 700);
+    }
+
+    setInterval(nextSlide, 5000);
+  </script>
+</body>
+</html>
